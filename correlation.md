@@ -70,6 +70,8 @@ where $C$ = number of concordant pairs, $D$ = number of discordant pairs.
 **Why visualization is essential** (Anscombe’s quartet & Datasaurus Dozen show datasets with identical correlation statistics but completely different patterns):
 
 
+![Correlation Heatmap](https://github.com/sikaneka/EDA/blob/main/images/correlated%20predicters.png)
+
 
 
 
