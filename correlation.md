@@ -143,11 +143,8 @@ where $R_j^2$ is from regressing $X_j$ on all other predictors.
 - Any nominal → Chi-square + Cramér's V  
 - Regression model → Correlation matrix + **VIF**
 
-## 7. Python Examples
 
-(Refer to previous consolidated version for full code snippets covering Pearson, Spearman, chi2_contingency + Cramér's V, pointbiserialr, and VIF calculation.)
-
-## 8. Common Pitfalls
+## 7. Common Pitfalls
 
 - Relying solely on correlation matrix without VIF  
 - Pearson on non-normal/non-linear data  
