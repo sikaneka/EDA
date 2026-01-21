@@ -63,6 +63,8 @@ X_test_scaled  = scaler.transform(X_test)
 ❌ Wrong (data leakage):
 scaler.fit(pd.concat([X_train, X_test]))
 
+```
+
 ## Most Common Scaling Methods (2025–2026)
 
 Even in 2025–2026, the **core scaling techniques** in scikit-learn and everyday ML pipelines haven't changed dramatically. Recent studies and benchmarks continue to confirm these as the go-to choices:
