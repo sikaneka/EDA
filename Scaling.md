@@ -62,3 +62,75 @@ X_test_scaled  = scaler.transform(X_test)
 
 ❌ Wrong (data leakage):
 scaler.fit(pd.concat([X_train, X_test]))
+
+## Most Common Scaling Methods (2025–2026)
+
+Even in 2025–2026, the **core scaling techniques** in scikit-learn and everyday ML pipelines haven't changed dramatically. Recent studies and benchmarks continue to confirm these as the go-to choices:
+
+| Method              | Range / Properties               | Best for                                      | Sensitive to outliers? | sklearn class              | Recommendation (2025–2026) |
+|---------------------|----------------------------------|-----------------------------------------------|------------------------|----------------------------|-----------------------------|
+| **MinMaxScaler**    | [0, 1] or custom range           | Neural networks, CNNs, bounded data, images   | Yes (very)             | `MinMaxScaler()`           | Still #1 choice for deep learning & when you need strict bounds |
+| **StandardScaler**  | mean ≈ 0, std ≈ 1                | Linear models, SVM, logistic regression, LDA, most gradient-based algos | Moderately             | `StandardScaler()`         | **Default / most versatile** — use first in almost every project |
+| **RobustScaler**    | median-centered, IQR scaling     | Real-world data with outliers (very common)   | No / resistant         | `RobustScaler()`           | Rising favorite in 2025–2026 for tabular & production data |
+| **MaxAbsScaler**    | [-1, 1], preserves sparsity      | Sparse datasets (text counts, TF-IDF)         | Yes                    | `MaxAbsScaler()`           | Niche — use mainly for sparse/high-dimensional data |
+| **QuantileTransformer** | Maps to uniform or normal dist. | Heavily skewed / non-Gaussian data            | Reduces impact         | `QuantileTransformer()`    | Gaining popularity for improving model stability on weird distributions |
+| **PowerTransformer** (Yeo-Johnson / Box-Cox) | Makes data more Gaussian-like | Skewed features before other scaling          | Reduces skewness       | `PowerTransformer()`       | Excellent pre-step when distributions are very asymmetric |
+| **log / log1p**     | Compresses positive large values | Prices, counts, monetary values (very skewed) | Reduces impact         | `np.log1p()` or manual     | Simple & powerful — often applied before Standard/MinMax |
+
+### Quick Decision Guide for Beginners (2025–2026 style)
+
+- **No idea where to start?** → **`StandardScaler`** (works 80% of the time)
+- **Neural network / deep learning pipeline?** → **`MinMaxScaler`** (0–1 range helps gradients)
+- **Your data has obvious outliers or you saw crazy max values in `df.describe()`?** → **`RobustScaler`**
+- **Very skewed monetary / count data (e.g., salary, clicks, sales)?** → Try `np.log1p()` → then `StandardScaler` or `MinMaxScaler`
+- **After EDA you see non-normal distributions hurting performance?** → Try **`PowerTransformer`** or **`QuantileTransformer`**
+- **Sparse text / bag-of-words features?** → **`MaxAbsScaler`**
+
+Recent papers (2024–2025) keep showing:
+- Tree-based models (RandomForest, XGBoost, LightGBM, CatBoost) → almost never need scaling
+- Distance / gradient / regularization-heavy models → scaling is critical
+- Robust & quantile methods often win on real (messy) tabular datasets
+
+---
+
+## Minimal Practical Example (Updated)
+
+```python
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler, PowerTransformer, QuantileTransformer
+
+# 1. Load data
+df = pd.read_csv("your_data.csv")
+X = df.drop(columns=["target"], errors="ignore")
+y = df.get("target", None)  # optional
+
+# 2. Train-test split FIRST
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+
+# 3. Pick one (examples below)
+
+# A — Most common / safe default
+scaler = StandardScaler()
+
+# B — Outliers present → go robust
+# scaler = RobustScaler()
+
+# C — Neural network coming later
+# scaler = MinMaxScaler()
+
+# D — Skewed data → make more Gaussian first
+# scaler = PowerTransformer(method='yeo-johnson')   # or 'box-cox' if all positive
+
+# E — Want uniform / normal-like output
+# scaler = QuantileTransformer(output_distribution='normal')  # or 'uniform'
+
+# Fit & transform — ONLY on train!
+X_train_scaled = scaler.fit_transform(X_train.select_dtypes(include=np.number))
+X_test_scaled  = scaler.transform(X_test.select_dtypes(include=np.number))
+
+# Tip: convert back to DataFrame if you like
+X_train_scaled = pd.DataFrame(X_train_scaled, columns=X_train.select_dtypes(include=np.number).columns)
