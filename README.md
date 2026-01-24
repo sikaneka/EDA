@@ -170,6 +170,6 @@ plt.show()
 
 
 
-**Made with ❤️ for Data Newbies. Last Updated: December 2025**
+**Made with ❤️ for Data Newbies.**
 ⭐ *Stars & forks appreciated!* 🌟
 
