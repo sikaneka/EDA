@@ -221,7 +221,21 @@ EDA has several limitations:
 
 ---
 
-## 26. How should EDA findings be documented in academic work?
+## 26. Should outlier handling be done on the target variable during EDA?
+
+Outlier handling on the target variable depends on the problem context and modeling objective. In general, target outliers should not be removed blindly during EDA.
+
+* If the target outliers represent real and valid observations (e.g., high house prices, extreme sales, rare events), they should be retained, as removing them may bias the model and reduce real-world performance.
+* If the outliers are caused by data entry errors, measurement issues, or noise, they can be corrected or removed after proper validation.
+* In regression problems, extreme target values can heavily influence the model. In such cases, techniques like log transformation, winsorization, or robust models can be considered instead of deletion.
+* In classification problems, outlier handling is usually applied to features, not the target, since class imbalance is addressed using different strategies (resampling, class weights).
+
+Key takeaway:
+Outliers in the target variable should be handled only after understanding the domain, data source, and business impact, and removal should be the last option, not the first.
+
+---
+
+## 27. How should EDA findings be documented in academic work?
 
 EDA findings should be:
 
