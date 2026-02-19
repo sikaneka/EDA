@@ -1,5 +1,5 @@
 
-# 📊 Exploratory Data Analysis (EDA) - A Beginner's Guide 🚀
+# 📊 Exploratory Data Analysis (EDA) - A Beginner's Guide 
 
 [![EDA Banner](https://via.placeholder.com/800x200/007ACC/FFFFFF?text=Unlocking+Data+Insights+with+EDA)](https://github.com/yourusername/eda-guide)
 
