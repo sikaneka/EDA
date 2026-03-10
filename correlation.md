@@ -1,4 +1,4 @@
-**# Correlation & Multicollinearity Analysis Guide**
+**Correlation & Multicollinearity Analysis Guide**
 
 ## 1. Introduction
 
